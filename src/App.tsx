@@ -93,20 +93,30 @@ export function App() {
       const stream = await model.stream(history, { signal: controller.signal });
 
       let fullContent = "";
+      let lastUpdateTime = Date.now();
+      const throttleMs = 150;
       for await (const chunk of stream) {
         const content =
           typeof chunk.content === "string"
             ? chunk.content
             : JSON.stringify(chunk.content);
         fullContent += content;
-
+        const now = Date.now();
         // Update the AI message in state
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === aiMsgId ? { ...msg, text: fullContent } : msg,
-          ),
-        );
+        if (now - lastUpdateTime > throttleMs) {
+          lastUpdateTime = now;
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === aiMsgId ? { ...msg, text: fullContent } : msg,
+            ),
+          );
+        }
       }
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === aiMsgId ? { ...msg, text: fullContent } : msg,
+        ),
+      );
     } catch (error: unknown) {
       if (error instanceof Error && error.name === "AbortError") {
         console.log("Generation aborted by user");
