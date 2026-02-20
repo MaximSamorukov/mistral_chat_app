@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Box,
   Button,
@@ -22,6 +22,7 @@ interface Message {
 
 export function App() {
   const [model] = useModel();
+  const [isAncora, setIsAncora] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: "Hello! How can I help you today?", sender: "ai" },
   ]);
@@ -29,7 +30,7 @@ export function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
-
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const handleStop = () => {
     if (abortController) {
       abortController.abort();
@@ -37,10 +38,25 @@ export function App() {
       setAbortController(null);
     }
   };
+  const scrollToBottom = () => {
+    console.log(messagesEndRef.current);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
 
+    const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 25;
+    if (isAtBottom) {
+      console.log("Мы в самом низу!");
+      setIsAncora(true);
+    } else {
+      console.log("Пользователь прокрутил наверх");
+      setIsAncora(false);
+    }
+  };
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isGenerating) return;
-
+    setIsAncora(true);
     const userMsgText = inputValue;
     setInputValue("");
     setIsGenerating(true);
@@ -112,7 +128,9 @@ export function App() {
       setAbortController(null);
     }
   };
-
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   return (
     <Container maxW="5xl" h="100vh" py={8}>
       <VStack h="full" gap={4} align="stretch">
@@ -128,6 +146,7 @@ export function App() {
           overflowY="auto"
           bg="gray.50"
           _dark={{ bg: "gray.900" }}
+          onScroll={handleScroll}
         >
           <VStack gap={4} align="stretch">
             {messages.map((msg) => (
@@ -215,6 +234,7 @@ export function App() {
                 )}
               </Box>
             ))}
+            {isAncora && <div ref={messagesEndRef} />}
           </VStack>
         </Box>
 
