@@ -12,8 +12,13 @@
   "dependencies": {
     "@chakra-ui/react": "^3.33.0",
     "@emotion/react": "^11.14.0",
+    "@langchain/core": "^1.1.26",
+    "@langchain/mistralai": "^1.0.4",
+    "langchain": "^1.2.25",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sass": "^1.97.3"
   },
   "devDependencies": {
