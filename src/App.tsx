@@ -45,7 +45,7 @@ export function App() {
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
 
-    const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 40;
+    const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 30;
     if (isAtBottom) {
       console.log("Мы в самом низу!");
       setIsAncora(true);
