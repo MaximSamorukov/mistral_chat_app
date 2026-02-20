@@ -40,12 +40,12 @@ export function App() {
   };
   const scrollToBottom = () => {
     console.log(messagesEndRef.current);
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
 
-    const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 30;
+    const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 40;
     if (isAtBottom) {
       console.log("Мы в самом низу!");
       setIsAncora(true);
@@ -128,6 +128,7 @@ export function App() {
       setAbortController(null);
     }
   };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
