@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# AI Chat со стримингом и поддержкой Markdown 🤖💬
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Современное адаптивное приложение для чата с ИИ, построенное на **React**, **Chakra UI (v3)** и **LangChain**. Поддерживает потоковую передачу ответов в реальном времени, рендеринг Markdown и возможность прерывания генерации.
 
-Currently, two official plugins are available:
+## ✨ Особенности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **Стриминг в реальном времени**: Ответы ИИ отображаются постепенно, по мере генерации текста.
+-   **Поддержка Markdown**: Ответы ИИ форматируются с полной поддержкой разметки (заголовки, списки, блоки кода и т. д.) с помощью `react-markdown` и `remark-gfm`.
+-   **Остановка генерации**: Возможность прервать ответ ИИ в любой момент с помощью кнопки «Stop».
+-   **Умная прокрутка**: Автоматический скролл к новым сообщениям с логикой обнаружения ручной прокрутки пользователем.
+-   **Контекст диалога**: Приложение помнит историю переписки для поддержания связного диалога.
+-   **Адаптивный дизайн**: Современный интерфейс на Chakra UI v3, корректно работающий на разных экранах.
+-   **Темная тема**: Автоматическая поддержка системной или пользовательской темной темы.
 
-## React Compiler
+## 🛠 Технологический стек
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   **Frontend**: React 19, Vite, TypeScript
+-   **Библиотека UI**: Chakra UI v3
+-   **Интеграция с ИИ**: LangChain.js
+-   **Модель**: Mistral AI (`open-mistral-7b`)
+-   **Рендеринг Markdown**: `react-markdown`, `remark-gfm`
 
-## Expanding the ESLint configuration
+## 🚀 Начало работы
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Предварительные требования
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-   Node.js (v20 или выше)
+-   API ключ Mistral AI
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Установка
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1.  **Клонируйте репозиторий**:
+    ```bash
+    git clone <repository-url>
+    cd ai_chat
+    ```
+
+2.  **Установите зависимости**:
+    ```bash
+    npm install
+    ```
+
+3.  **Настройте переменные окружения**:
+    Создайте файл `.env` в корневой директории и добавьте ваш ключ Mistral AI:
+    ```env
+    VITE_AI_KEY=ваш_api_ключ_здесь
+    ```
+
+### Разработка
+
+Запуск сервера для разработки:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Приложение будет доступно по адресу `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Сборка для продакшена
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+## 📝 Лицензия
+
+Распространяется под лицензией MIT.
